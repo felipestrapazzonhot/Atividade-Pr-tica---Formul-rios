@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FICE — Feira de Iniciação Científica e Extensão | IFC Campus Videira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="stamp-field" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <p class="eyebrow">IFC · Campus Videira</p>
+    <h1>FICE <span class="header-sep">—</span> Feira de Iniciação Científica e Extensão</h1>
+    <p class="subtitle">Ficha de inscrição e painel de trabalhos cadastrados para o evento</p>
+  </div>
+</header>
+
+<main class="app-shell">
+
+  <!-- FORM CARD -->
+  <section class="card form-card" aria-labelledby="form-title">
+    <div class="card-head">
+      <h2 id="form-title"><span id="form-mode-label">Ficha de Inscrição</span></h2>
+      <p class="card-hint">Campos marcados com <span class="req-mark">*</span> são obrigatórios</p>
+    </div>
+
+    <form id="work-form" novalidate>
+      <input type="hidden" id="work-id">
+
+      <div class="field">
+        <label for="titulo">Título do trabalho <span class="req-mark">*</span></label>
+        <input type="text" id="titulo" name="titulo" required minlength="3" maxlength="200"
+               placeholder="Ex.: Compostagem de resíduos orgânicos no campus">
+        <span class="field-error"></span>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="autorPrincipal">Autor principal <span class="req-mark">*</span></label>
+          <input type="text" id="autorPrincipal" name="autorPrincipal" required minlength="3" maxlength="120"
+                 placeholder="Nome completo">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="email">E-mail do autor <span class="req-mark">*</span></label>
+          <input type="email" id="email" name="email" required
+                 placeholder="autor@estudante.ifc.edu.br">
+          <span class="field-error"></span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="area">Área / Curso <span class="req-mark">*</span></label>
+          <input type="text" id="area" name="area" required maxlength="80" list="area-suggestions"
+                 placeholder="Ex.: Agropecuária, Informática...">
+          <datalist id="area-suggestions">
+            <option value="Agropecuária">
+            <option value="Informática">
+            <option value="Alimentos">
+            <option value="Meio Ambiente">
+            <option value="Agroindústria">
+            <option value="Zootecnia">
+          </datalist>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="data">Data de apresentação <span class="req-mark">*</span></label>
+          <input type="date" id="data" name="data" required>
+          <span class="field-error"></span>
+        </div>
+      </div>
+
+      <fieldset class="field modalidade-field">
+        <legend>Modalidade <span class="req-mark">*</span></legend>
+        <div class="radio-group">
+          <label class="radio-pill">
+            <input type="radio" name="modalidade" value="Iniciação Científica" required>
+            <span>Iniciação Científica</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="modalidade" value="Extensão" required>
+            <span>Extensão</span>
+          </label>
+        </div>
+        <span class="field-error" id="modalidade-error"></span>
+      </fieldset>
+
+      <div class="field">
+        <label for="demaisAutores">Demais autores <span class="opt-mark">(opcional)</span></label>
+        <input type="text" id="demaisAutores" name="demaisAutores" maxlength="300"
+               placeholder="Separe os nomes por vírgula">
+      </div>
+
+      <div class="field">
+        <label for="resumo">Resumo do trabalho <span class="req-mark">*</span></label>
+        <textarea id="resumo" name="resumo" required minlength="30" maxlength="2000" rows="5"
+                  placeholder="Descreva objetivos, metodologia e resultados esperados/obtidos (mínimo 30 caracteres)"></textarea>
+        <span class="field-error"></span>
+        <span class="char-count" id="resumo-count">0 / 2000</span>
+      </div>
+
+      <div class="field">
+        <label for="arquivo">Arquivo do trabalho (PDF) <span class="req-mark">*</span></label>
+        <input type="file" id="arquivo" name="arquivo" accept="application/pdf">
+        <span class="field-hint" id="arquivo-hint">Apenas arquivos .pdf, até 4&nbsp;MB.</span>
+        <span class="field-error"></span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="submit-btn">Cadastrar trabalho</button>
+        <button type="button" class="btn btn-ghost" id="cancel-edit-btn" hidden>Cancelar edição</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- LIST CARD -->
+  <section class="card list-card" aria-labelledby="list-title">
+    <div class="card-head list-card-head">
+      <div>
+        <h2 id="list-title">Trabalhos Inscritos</h2>
+        <p class="card-hint"><span id="total-count">0</span> trabalho(s) cadastrado(s)</p>
+      </div>
+      <div class="list-controls">
+        <input type="search" id="search-input" placeholder="Buscar por título ou autor..." aria-label="Buscar trabalhos">
+        <select id="filter-modalidade" aria-label="Filtrar por modalidade">
+          <option value="todas">Todas as modalidades</option>
+          <option value="Iniciação Científica">Iniciação Científica</option>
+          <option value="Extensão">Extensão</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="works-table">
+        <thead>
+          <tr>
+            <th scope="col">Protocolo</th>
+            <th scope="col">Trabalho</th>
+            <th scope="col">Área / Curso</th>
+            <th scope="col">Modalidade</th>
+            <th scope="col">Apresentação</th>
+            <th scope="col">PDF</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="works-tbody">
+          <!-- linhas geradas via JavaScript -->
+        </tbody>
+      </table>
+
+      <div class="empty-state" id="empty-state" hidden>
+        <p class="empty-title">Nenhum trabalho cadastrado ainda</p>
+        <p class="empty-text">Preencha a ficha de inscrição ao lado para registrar o primeiro trabalho da FICE.</p>
+      </div>
+
+      <div class="empty-state" id="no-results-state" hidden>
+        <p class="empty-title">Nenhum resultado encontrado</p>
+        <p class="empty-text">Ajuste a busca ou o filtro de modalidade.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Os dados desta ficha são salvos apenas no navegador utilizado (localStorage) — não são enviados a nenhum servidor.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
